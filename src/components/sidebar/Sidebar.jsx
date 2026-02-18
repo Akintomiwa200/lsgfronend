@@ -13,6 +13,8 @@ const AdminSidebar = () => {
     { name: "Dashboard", icon: <LuLayoutDashboard size={20} />, path: "/admin" },
     { name: "Quotations", icon: <MdOutlineClass size={20} />, path: "/admin/quote" },
     { name: "Buyers", icon: <MdAssignment size={20} />, path: "/admin/buyers" },
+    { name: "Realtors", icon: <MdOutlineClass size={20} />, path: "/admin/realtor" },
+    { name: "Contacts", icon: <MdAssignment size={20} />, path: "/admin/contacts" },
   ];
 
   return (
@@ -64,7 +66,7 @@ const AdminSidebar = () => {
         ))}
       </ul>
 
-    
+
     </div>
   );
 };

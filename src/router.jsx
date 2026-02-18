@@ -13,6 +13,7 @@ import Dashboard from "./pages/admin/dashboard/Dashboard";
 import Quotations from "./pages/admin/dashboard/Quotations";
 import Buyers from "./pages/admin/dashboard/Buyers";
 import Realtors from "./pages/admin/dashboard/Realtors";
+import Contacts from "./pages/admin/dashboard/Contacts";
 
 const router = createBrowserRouter([
     {
@@ -32,7 +33,7 @@ const router = createBrowserRouter([
             },
             {
                 path: "our_services",
-                element: <OurService/>
+                element: <OurService />
             },
             {
                 path: "/realtor",
@@ -44,36 +45,40 @@ const router = createBrowserRouter([
             },
             {
                 path: "/build",
-                element: <BuildingQuot/>
+                element: <BuildingQuot />
             }
             ,
             {
                 path: "/faq",
-                element:<Faq/>
+                element: <Faq />
             },
             {
                 path: "/admin",
-                element: <AdminLayout/>,
+                element: <AdminLayout />,
                 children: [
-                   {
-                    index: true,
-                    element: <Dashboard/>
-                   },
-                   {
-                    path: "quote",
-                    element:<Quotations/>
-                   },
-                   {
-                    path: "buyers",
-                    element: <Buyers/>
-                   },
-                   {
-                    path: "realtor",
-                    element: <Realtors/>
-                   }
+                    {
+                        index: true,
+                        element: <Dashboard />
+                    },
+                    {
+                        path: "quote",
+                        element: <Quotations />
+                    },
+                    {
+                        path: "buyers",
+                        element: <Buyers />
+                    },
+                    {
+                        path: "realtor",
+                        element: <Realtors />
+                    },
+                    {
+                        path: "contacts",
+                        element: <Contacts />
+                    }
                 ]
             }
-        
+
         ],
     },
 ]);

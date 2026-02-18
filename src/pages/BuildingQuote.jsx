@@ -2,10 +2,9 @@ import { useState } from "react";
 import { MapPin, Mail, Linkedin, Facebook, Instagram } from "lucide-react";
 import ex from "../assets/Frame66.png";
 import Banner from "../components/homepage/Banner";
-
+import { quotationService } from "../services/api";
 
 const BuildingQuot = () => {
-
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -21,24 +20,14 @@ const BuildingQuot = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("https://lsg-backend.onrender.com/api/quotes", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: `${formData.firstName} ${formData.lastName}`,
-          phone: formData.phone,
-          email: formData.email,
-          plots: formData.plots,
-          purpose: formData.purpose,
-        }),
+      await quotationService.create({
+        name: `${formData.firstName} ${formData.lastName}`,
+        phone: formData.phone,
+        email: formData.email,
+        plots: formData.plots,
+        purpose: formData.purpose,
       });
-  
-      if (!response.ok) {
-        throw new Error("Failed to submit quote request");
-      }
-  
+
       alert("Quote request sent successfully!");
       setFormData({
         firstName: "",
@@ -53,21 +42,21 @@ const BuildingQuot = () => {
       console.error(error);
     }
   };
-  
+
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col">
       {/* Banner Section */}
       <div className="w-full  text-center ">
         <img
-          src={ex} 
+          src={ex}
           alt="Pay Zero!"
           className="mx-auto w-full h-[25vh] lg:h-auto"
         />
       </div>
 
-       {/* Main Content */}
-       <div className="container mx-auto p-4 lg:h-[70vh] flex flex-col md:flex-row bg-white shadow-lg rounded-lg my-10">
+      {/* Main Content */}
+      <div className="container mx-auto p-4 lg:h-[70vh] flex flex-col md:flex-row bg-white shadow-lg rounded-lg my-10">
         {/* Left: Contact Info */}
         <div className="w-full md:w-1/3 hidden md:flex flex-col bg-[#1D2150] text-white p-8 px-12 rounded-l-lg">
           <h2 className="text-4xl font-normal mb-6">Our Contact Info:</h2>
@@ -136,8 +125,8 @@ const BuildingQuot = () => {
       </div>
 
       <div className="w-[90vw] lg:w-[80vw] mx-auto z-10 mb-16">
-<Banner/>
-</div>
+        <Banner />
+      </div>
     </div>
   );
 };

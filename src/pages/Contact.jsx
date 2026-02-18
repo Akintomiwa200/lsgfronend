@@ -1,13 +1,10 @@
 import React, { useState } from "react";
-import emailjs from "@emailjs/browser";
 import { MapPin, Mail, Facebook, Instagram, Linkedin } from "lucide-react";
 import ex from "../assets/Frame14.png";
 import Banner from "../components/homepage/Banner";
-
-
+import { contactService } from "../services/api";
 
 const Contact = () => {
-
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -22,28 +19,23 @@ const Contact = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
     try {
-      await emailjs.send(
-        "your_service_id", 
-        "your_template_id", 
-        {
-          name: formData.name,
-          email: formData.email,
-          subject: formData.subject,
-          message: formData.message,
-        },
-        "your_public_key" 
-      );
+      await contactService.create({
+        name: formData.name,
+        email: formData.email,
+        subject: formData.subject,
+        message: formData.message,
+      });
 
       setSuccess("Message sent successfully!");
       setFormData({ name: "", email: "", subject: "", message: "" });
     } catch (error) {
       setSuccess("Failed to send message. Try again later.");
+      console.error(error);
     }
 
     setLoading(false);

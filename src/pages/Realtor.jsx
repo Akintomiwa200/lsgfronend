@@ -1,10 +1,8 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { MapPin, Mail, Facebook, Instagram, Linkedin } from "lucide-react";
 import ex from "../assets/Frame67.png"
 import Banner from "../components/homepage/Banner";
-
-
-
+import { realtorService } from "../services/api";
 
 const Realtor = () => {
 
@@ -37,30 +35,21 @@ const Realtor = () => {
     };
 
     try {
-      const response = await fetch("https://lsg-backend.onrender.com/api/realtors", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(realtorData),
+      await realtorService.create(realtorData);
+
+      alert("Realtor registered successfully!");
+      setFormData({
+        firstName: "",
+        lastName: "",
+        phone: "",
+        email: "",
+        licenseNumber: "",
+        agency: "",
+        experience: "",
+        specialization: "",
       });
-
-      const data = await response.json();
-      if (response.ok) {
-        alert("Realtor registered successfully!");
-        setFormData({
-          firstName: "",
-          lastName: "",
-          phone: "",
-          email: "",
-          licenseNumber: "",
-          agency: "",
-          experience: "",
-          specialization: "",
-        });
-      } else {
-        alert(`Error: ${data.error}`);
-      }
-
     } catch (error) {
+      alert("Error submitting form.");
       console.error("Error submitting form:", error);
     }
   };

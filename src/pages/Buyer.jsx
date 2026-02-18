@@ -2,11 +2,9 @@ import { useState } from "react";
 import { MapPin, Mail, Facebook, Instagram, Linkedin } from "lucide-react";
 import ex from "../assets/Frame68.png"
 import Banner from "../components/homepage/Banner";
-
-
+import { buyerService } from "../services/api";
 
 const Buyer = () => {
-
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -23,33 +21,16 @@ const Buyer = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    const payload = {
-      name: `${formData.firstName} ${formData.lastName}`,
-      phone: formData.phone,
-      email: formData.email,
-      plots: formData.plots,
-      purpose: formData.purpose,
-    };
-  
-    console.log("Sending Payload:", payload);
-  
+
     try {
-      const response = await fetch("https://lsg-backend.onrender.com/api/buyers", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
+      await buyerService.create({
+        name: `${formData.firstName} ${formData.lastName}`,
+        phone: formData.phone,
+        email: formData.email,
+        plots: formData.plots,
+        purpose: formData.purpose,
       });
-  
-      const result = await response.json();
-      console.log("Server Response:", result);
-  
-      if (!response.ok) {
-        throw new Error(result.message || "Failed to submit buying request");
-      }
-  
+
       alert("Quote request sent successfully!");
       setFormData({
         firstName: "",
